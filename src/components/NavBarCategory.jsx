@@ -1,10 +1,10 @@
-import { NavLink } from 'react-bootstrap';
+import { NavItem, NavLink } from 'react-bootstrap';
 
 function NavBarCategory({ categoryName, categoryPath }) {
   return (
-    <NavLink to={categoryPath} className="mr-auto">
-      {categoryName}
-    </NavLink>
+    <NavItem className="mr-auto">
+      <NavLink to={categoryPath}>{categoryName}</NavLink>
+    </NavItem>
   );
 }
 export default NavBarCategory;
