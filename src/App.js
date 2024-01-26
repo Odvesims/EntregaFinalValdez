@@ -1,23 +1,18 @@
-import logo from './logo.svg';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import NavBar from './components/NavBar';
 
 function App() {
+  const categories = [
+    { id: 1, name: 'Remeras', path: 'tops' },
+    { id: 2, name: 'Pantalones', path: 'pants' },
+    { id: 3, name: 'Zapatos', path: 'shoes' },
+    { id: 4, name: 'Ropa Interior', path: 'underwear' },
+  ];
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NavBar appName="sweetStore" categories={categories} />
     </div>
   );
 }
