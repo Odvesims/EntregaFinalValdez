@@ -1,70 +1,27 @@
-# Getting Started with Create React App
+# PreEntrega 1 - sweetStore
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Esta primera entrega consiste en desarrollar una APP en React que contenga, como mínimo, los siguientes componentes:
 
-## Available Scripts
+### NavBar
 
-In the project directory, you can run:
+### CartWidget
 
-### `npm start`
+## Desarrollo
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Para el desarrollo se implementó la librería de react-bootstrap para poder utilizar los componentes de NavBar y asociados. También se utilizó react-icons para los íconos.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Se realizó un componente adicional NavBarCategory que permita extraer la lógica de las categorías de la tienda en un componente independiente.
 
-### `npm test`
+Se utilizó un objeto categories con la siguiente estructura:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+{ id: integer, name: "string", path: "string" }
 
-### `npm run build`
+De esta manera se pueden agregar categorías de una manera más dinámica en lugar de que sean hard-coded sino que se puede hacer uso de la function .map() para renderizar los componentes NavBarCategory y pasando los valores necesarios usando props. De igual modo, esta forma es más escalable ya que al momento de implementar un servicio ya sea API o una DB el formato de array de objetos hace que la forma en que se cargan los datos sea más normalizada.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Pasos para correr la app
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Clonar/descargar el repositorio
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Correr el comando `npm install` para instalar las dependencias necesarias
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Correr el comando `npm start` para arrancar la aplicación
