@@ -18,7 +18,9 @@ Se utilizó un objeto categories con la siguiente estructura:
 
 De esta manera se pueden agregar categorías de una manera más dinámica en lugar de que sean hard-coded sino que se puede hacer uso de la function .map() para renderizar los componentes NavBarCategory y pasando los valores necesarios usando props. De igual modo, esta forma es más escalable ya que al momento de implementar un servicio ya sea API o una DB el formato de array de objetos hace que la forma en que se cargan los datos sea más normalizada.
 
-# PreEntrega 1 - sweetStore
+
+
+# PreEntrega 2 - sweetStore
 
 En esta segunda entrega se implementó 'react-router-dom' para el manejo de las rutas. Se crearon los siguientes componentes:
 
