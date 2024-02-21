@@ -19,9 +19,13 @@ function NavBar({ appName, categories }) {
       <NavbarToggle aria-controls="basic-navbar-nav" />
       <NavbarCollapse id="basic-navbar-nav" className="justify-content-between">
         <Nav className="mr-auto">
-          {categories.map(({ id, title }) => {
+          {categories.map(({ id, title, path }) => {
             return (
-              <NavBarCategory key={id} categoryName={title} categoryPath={id} />
+              <NavBarCategory
+                key={id}
+                categoryName={title}
+                categoryPath={path}
+              />
             );
           })}
         </Nav>

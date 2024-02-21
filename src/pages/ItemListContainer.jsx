@@ -6,15 +6,17 @@ import { useParams } from 'react-router-dom';
 import ItemContainer from '../components/ItemContainer';
 
 import '../assets/styles/ItemListContainer.css';
+import { getCategoryId } from '../utils/mockCategories';
 
 function ItemListContainer() {
   const [items, setItems] = useState([]);
-  const { categoryId } = useParams();
+  const { categoryPath } = useParams();
 
   useEffect(() => {
     const fetchItems = async () => {
-      if (categoryId) {
-        const filteredItems = await getItemsByCategory(parseInt(categoryId));
+      if (categoryPath) {
+        const categoryId = await getCategoryId(categoryPath);
+        const filteredItems = await getItemsByCategory(categoryId);
         setItems(filteredItems);
       } else {
         const allItems = await getItems();
@@ -22,7 +24,7 @@ function ItemListContainer() {
       }
     };
     fetchItems();
-  }, [categoryId]);
+  }, [categoryPath]);
 
   return (
     <div>
@@ -32,6 +34,7 @@ function ItemListContainer() {
           items.map(({ id, title, image, description, price, rating }) => {
             return (
               <ItemContainer
+                key={id}
                 id={id}
                 title={title}
                 image={image}

@@ -12,3 +12,11 @@ export const getCategories = () => {
     }, 200);
   });
 };
+
+export const getCategoryId = (path) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(itemCategories.find((item) => item.path === path).id);
+    }, 100);
+  });
+};

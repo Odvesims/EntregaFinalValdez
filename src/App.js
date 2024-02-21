@@ -30,7 +30,7 @@ function App() {
         <Route path="/products" element={<ItemListContainer />} />
         <Route path="/products/:productId" element={<ItemDetail />} />
         <Route
-          path="/products/category/:categoryId"
+          path="/products/category/:categoryPath"
           element={<ItemListContainer />}
         />
         <Route path="*" element={<NotFound />} />
