@@ -33,6 +33,10 @@ function App() {
           path="/products/category/:categoryPath"
           element={<ItemListContainer />}
         />
+        <Route
+          path="/products/:categoryPath/:productId"
+          element={<ItemDetail />}
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

@@ -1,18 +1,25 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import { getItemById } from '../utils/mockItems';
+import { getItemById, getItemByIdAndCategory } from '../utils/mockItems';
 
 import '../assets/styles/ItemDetail.css';
+import { getCategoryId } from '../utils/mockCategories';
 
 function ItemDetail() {
-  const { productId } = useParams();
+  const { productId, categoryPath } = useParams();
   const [item, setItem] = useState({});
 
   useEffect(() => {
     const fetchItem = async () => {
-      const item = await getItemById(parseInt(productId));
-      console.log(item);
+      let item = {};
+      if (categoryPath) {
+        const categoryId = await getCategoryId(categoryPath);
+        item = await getItemByIdAndCategory(parseInt(productId), categoryId);
+      } else {
+        item = await getItemById(parseInt(productId));
+      }
+      console.log('item', item);
       if (item) setItem(item);
     };
     fetchItem();

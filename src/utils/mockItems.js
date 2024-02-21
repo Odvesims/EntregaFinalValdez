@@ -290,3 +290,15 @@ export const getItemsByCategory = (categoryId) => {
     }, 500);
   });
 };
+
+export const getItemByIdAndCategory = (itemId, categoryId) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(
+        itemsList.find(
+          (item) => item.id === itemId && item.category_id === categoryId
+        )
+      );
+    }, 300);
+  });
+};
