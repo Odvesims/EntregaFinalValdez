@@ -23,17 +23,22 @@ function App() {
   });
 
   return (
-    <BrowserRouter>
-      <NavBar appName="sweetStore" categories={categories} />
-      <Routes>
-        <Route path="/" element={<ItemListContainer />} />
-        <Route path="/category/:categoryPath" element={<ItemListContainer />} />
-        <Route path="/item/:itemId" element={<ItemDetail />} />
-        <Route path="/:categoryPath/:itemId" element={<ItemDetail />} />
-        <Route path="*" element={<NotFound text="404 NOT FOUND" />} />
-      </Routes>
-      <Footer />
-    </BrowserRouter>
+    <div>
+      <BrowserRouter>
+        <NavBar appName="sweetStore" categories={categories} />
+        <Routes>
+          <Route path="/" element={<ItemListContainer />} />
+          <Route
+            path="/category/:categoryPath"
+            element={<ItemListContainer />}
+          />
+          <Route path="/item/:itemId" element={<ItemDetail />} />
+          <Route path="/:categoryPath/:itemId" element={<ItemDetail />} />
+          <Route path="*" element={<NotFound text="404 NOT FOUND" />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </div>
   );
 }
 
