@@ -27,17 +27,10 @@ function App() {
       <NavBar appName="sweetStore" categories={categories} />
       <Routes>
         <Route path="/" element={<ItemListContainer />} />
-        <Route path="/products" element={<ItemListContainer />} />
-        <Route path="/products/:productId" element={<ItemDetail />} />
-        <Route
-          path="/products/category/:categoryPath"
-          element={<ItemListContainer />}
-        />
-        <Route
-          path="/products/:categoryPath/:productId"
-          element={<ItemDetail />}
-        />
-        <Route path="*" element={<NotFound />} />
+        <Route path="/category/:categoryPath" element={<ItemListContainer />} />
+        <Route path="/item/:itemId" element={<ItemDetail />} />
+        <Route path="/:categoryPath/:itemId" element={<ItemDetail />} />
+        <Route path="*" element={<NotFound text="404 NOT FOUND" />} />
       </Routes>
       <Footer />
     </BrowserRouter>

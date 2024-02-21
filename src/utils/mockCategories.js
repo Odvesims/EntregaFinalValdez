@@ -13,10 +13,18 @@ export const getCategories = () => {
   });
 };
 
-export const getCategoryId = (path) => {
+export const getCategoryByPath = (path) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(itemCategories.find((item) => item.path === path));
+    }, 100);
+  });
+};
+
+export const getCategoryById = (id) => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(itemCategories.find((item) => item.path === path).id);
+      resolve(itemCategories.find((item) => item.id === id));
     }, 100);
   });
 };

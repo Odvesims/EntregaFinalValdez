@@ -1,8 +1,8 @@
-function NotFound() {
+function NotFound({ text }) {
   return (
     <div>
       <h1>
-        <b>NO ENCONTRADO</b>
+        <b>{text}</b>
       </h1>
     </div>
   );

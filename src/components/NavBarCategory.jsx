@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function NavBarCategory({ categoryName, categoryPath }) {
   return (
     <NavItem className="mr-auto">
-      <Link className="nav-link" to={`products/category/${categoryPath}`}>
+      <Link className="nav-link" to={`category/${categoryPath}`}>
         {categoryName}
       </Link>
     </NavItem>
