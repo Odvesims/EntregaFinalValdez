@@ -1,0 +1,28 @@
+.item-container {
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.item-image {
+  height: 40%;
+}
+
+.item-title {
+  height: 30%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.item-price-rate {
+  height: 5%;
+}
+
+.item-more {
+  height: 15%;
+}
+
+img {
+  width: 60%;
+  height: 80%;
+}

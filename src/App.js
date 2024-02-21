@@ -1,24 +1,42 @@
 import './assets/styles/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import ItemListContainer from './pages/ItemListContainer';
+import NotFound from './pages/NotFound';
+import Footer from './components/Footer';
 
 import NavBar from './components/NavBar';
-import ItemListContainer from './components/ItemListContainer';
+import { getCategories } from './utils/mockCategories';
+import ItemDetail from './pages/ItemDetail';
+import { useEffect, useState } from 'react';
 
 function App() {
-  const categories = [
-    { id: 1, name: 'Remeras', path: '/tops' },
-    { id: 2, name: 'Pantalones', path: '/pants' },
-    { id: 3, name: 'Zapatos', path: '/shoes' },
-    { id: 4, name: 'Ropa Interior', path: '/underwear' },
-  ];
+  const [categories, setCategories] = useState([]);
 
-  const greeting = 'Hola, bienvenido a SweetStore';
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const itemsCategories = await getCategories();
+      setCategories(itemsCategories);
+    };
+    fetchCategories();
+  });
 
   return (
-    <div className="App">
+    <BrowserRouter>
       <NavBar appName="sweetStore" categories={categories} />
-      <ItemListContainer greeting={greeting} />
-    </div>
+      <Routes>
+        <Route path="/" element={<ItemListContainer />} />
+        <Route path="/products" element={<ItemListContainer />} />
+        <Route path="/products/:productId" element={<ItemDetail />} />
+        <Route
+          path="/products/category/:categoryId"
+          element={<ItemListContainer />}
+        />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Footer />
+    </BrowserRouter>
   );
 }
 

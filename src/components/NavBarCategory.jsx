@@ -1,9 +1,12 @@
-import { NavItem, NavLink } from 'react-bootstrap';
+import { NavItem } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function NavBarCategory({ categoryName, categoryPath }) {
   return (
     <NavItem className="mr-auto">
-      <NavLink to={categoryPath}>{categoryName}</NavLink>
+      <Link className="nav-link" to={`products/category/${categoryPath}`}>
+        {categoryName}
+      </Link>
     </NavItem>
   );
 }
