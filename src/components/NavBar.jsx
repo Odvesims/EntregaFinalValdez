@@ -8,10 +8,14 @@ import {
   NavbarCollapse,
 } from 'react-bootstrap';
 
+import { Link } from 'react-router-dom';
+
 function NavBar({ appName, categories }) {
   return (
     <Navbar bg="light" expand="lg" display="flex">
-      <NavbarBrand href="/">{appName}</NavbarBrand>
+      <NavbarBrand as={Link} to="/">
+        {appName}
+      </NavbarBrand>
       <NavbarToggle aria-controls="basic-navbar-nav" />
       <NavbarCollapse id="basic-navbar-nav" className="justify-content-between">
         <Nav className="mr-auto">
