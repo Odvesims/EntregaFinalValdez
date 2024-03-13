@@ -62,7 +62,7 @@ const ItemDetail = () => {
     <div>
       {item ? (
         <div className="item-detail card">
-          <div className="card-img">
+          <div className="card-img img-fluid rounded-start">
             <img src={item.image} />
           </div>
           <div className="card-header">
@@ -91,6 +91,9 @@ const ItemDetail = () => {
                   setItemInCart={setItemInCart}
                   itemCount={itemCount}
                   itemId={item.id}
+                  itemName={item.title}
+                  itemImage={item.image}
+                  itemPrice={item.price}
                 />
               </div>
             </div>

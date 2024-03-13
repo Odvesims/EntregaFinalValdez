@@ -4,6 +4,7 @@ export const CartContext = createContext();
 
 function CartContextWrapper({ children }) {
   const [cartItemsCount, setCartItemsCount] = useState(0);
+  const [cartTotal, setCartTotal] = useState(0);
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
@@ -19,10 +20,13 @@ function CartContextWrapper({ children }) {
   useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
     let itemsCount = 0;
+    let cartTotal = 0;
     cartItems.map((cartItem) => {
       itemsCount += cartItem.count;
+      cartTotal += cartItem.total;
     });
     setCartItemsCount(itemsCount);
+    setCartTotal(cartTotal);
   }, [cartItems]);
 
   const itemCartExistence = (item) => {
@@ -36,18 +40,25 @@ function CartContextWrapper({ children }) {
 
   const setItemInCart = (item, count) => {
     const itemExistence = itemCartExistence(item);
+    const total = count * item.price;
     if (itemExistence.exists) {
       setCartItems((prevCartItems) => {
         const updatedCartItems = [...prevCartItems];
         updatedCartItems[itemExistence.index].count = count;
+        updatedCartItems[itemExistence.index].total = total;
         return updatedCartItems;
       });
     } else {
       setCartItems((prevCartItems) => [
         ...prevCartItems,
-        { ...item, count: count },
+        { ...item, count: count, total },
       ]);
     }
+  };
+
+  const removeItemFromCart = (itemId) => {
+    const updatedCart = cartItems.filter((obj) => obj.id !== itemId);
+    setCartItems(updatedCart);
   };
 
   const getItemCount = (itemId) => {
@@ -61,7 +72,9 @@ function CartContextWrapper({ children }) {
       value={{
         cartItems,
         setItemInCart,
+        removeItemFromCart,
         cartItemsCount,
+        cartTotal,
         setCartItemsCount,
         getItemCount,
         itemCartExistence,

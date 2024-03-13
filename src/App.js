@@ -12,6 +12,7 @@ import ItemDetail from './pages/ItemDetail';
 import { useEffect, useState } from 'react';
 
 import CartContextWrapper from './context/CartContext';
+import Cart from './pages/Cart';
 
 const App = () => {
   const [categories, setCategories] = useState([]);
@@ -37,6 +38,7 @@ const App = () => {
             />
             <Route path="/item/:itemId" element={<ItemDetail />} />
             <Route path="/:categoryPath/:itemId" element={<ItemDetail />} />
+            <Route path="/cart" element={<Cart />} />
             <Route path="*" element={<NotFound text="404 NOT FOUND" />} />
           </Routes>
           <Footer />

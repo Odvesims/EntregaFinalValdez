@@ -34,14 +34,9 @@ const ItemList = ({ id, title, image, price, rate, category_id }) => {
       </div>
       <hr />
       <div className="item-more row">
-        <div className="col-6">
-          <Link className="btn btn-info" to={`/item/${id}`}>
+        <div className="col-12">
+          <Link className="btn btn-primary" to={`/${categoryName}/${id}`}>
             More
-          </Link>
-        </div>
-        <div className="col-6">
-          <Link className="btn btn-secondary" to={`/${categoryName}/${id}`}>
-            More+
           </Link>
         </div>
       </div>
