@@ -11,7 +11,9 @@ import { getCategories } from './utils/mockCategories';
 import ItemDetail from './pages/ItemDetail';
 import { useEffect, useState } from 'react';
 
-function App() {
+import CartContextWrapper from './context/CartContext';
+
+const App = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -25,21 +27,23 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <NavBar appName="sweetStore" categories={categories} />
-        <Routes>
-          <Route path="/" element={<ItemListContainer />} />
-          <Route
-            path="/category/:categoryPath"
-            element={<ItemListContainer />}
-          />
-          <Route path="/item/:itemId" element={<ItemDetail />} />
-          <Route path="/:categoryPath/:itemId" element={<ItemDetail />} />
-          <Route path="*" element={<NotFound text="404 NOT FOUND" />} />
-        </Routes>
-        <Footer />
+        <CartContextWrapper>
+          <NavBar appName="sweetStore" categories={categories} />
+          <Routes>
+            <Route path="/" element={<ItemListContainer />} />
+            <Route
+              path="/category/:categoryPath"
+              element={<ItemListContainer />}
+            />
+            <Route path="/item/:itemId" element={<ItemDetail />} />
+            <Route path="/:categoryPath/:itemId" element={<ItemDetail />} />
+            <Route path="*" element={<NotFound text="404 NOT FOUND" />} />
+          </Routes>
+          <Footer />
+        </CartContextWrapper>
       </BrowserRouter>
     </div>
   );
-}
+};
 
 export default App;

@@ -10,7 +10,7 @@ import {
 
 import { Link } from 'react-router-dom';
 
-function NavBar({ appName, categories }) {
+const NavBar = ({ appName, categories }) => {
   return (
     <Navbar bg="light" expand="lg" display="flex">
       <NavbarBrand as={Link} to="/">
@@ -30,10 +30,10 @@ function NavBar({ appName, categories }) {
           })}
         </Nav>
         <Nav className="float-right">
-          <CartWidget itemsCount="5" />
+          <CartWidget />
         </Nav>
       </NavbarCollapse>
     </Navbar>
   );
-}
+};
 export default NavBar;

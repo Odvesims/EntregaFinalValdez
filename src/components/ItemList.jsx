@@ -2,14 +2,14 @@ import '../assets/styles/ItemContainer.css';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getCategoryById } from '../utils/mockCategories';
+import ItemQuantitySelector from './ItemQuantitySelector';
 
-function ItemContainer({ id, title, image, price, rate, category_id }) {
+const ItemList = ({ id, title, image, price, rate, category_id }) => {
   const [categoryName, setCategoryName] = useState('');
 
   useEffect(() => {
     const fetchCategoryName = async () => {
       const category = await getCategoryById(category_id);
-      console.log('categoryId', category);
       if (category) setCategoryName(category.path);
     };
     fetchCategoryName();
@@ -47,6 +47,6 @@ function ItemContainer({ id, title, image, price, rate, category_id }) {
       </div>
     </div>
   );
-}
+};
 
-export default ItemContainer;
+export default ItemList;

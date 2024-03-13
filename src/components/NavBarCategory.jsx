@@ -1,7 +1,7 @@
 import { NavItem } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-function NavBarCategory({ categoryName, categoryPath }) {
+const NavBarCategory = ({ categoryName, categoryPath }) => {
   return (
     <NavItem className="mr-auto">
       <Link className="nav-link" to={`/category/${categoryPath}`}>
@@ -9,5 +9,5 @@ function NavBarCategory({ categoryName, categoryPath }) {
       </Link>
     </NavItem>
   );
-}
+};
 export default NavBarCategory;

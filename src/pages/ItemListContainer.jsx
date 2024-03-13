@@ -3,13 +3,15 @@ import { getItems, getItemsByCategory } from '../utils/mockItems';
 
 import { useParams } from 'react-router-dom';
 
-import ItemContainer from '../components/ItemContainer';
+import ItemList from '../components/ItemList';
 
 import '../assets/styles/ItemListContainer.css';
 import { getCategoryByPath } from '../utils/mockCategories';
 import NotFound from './NotFound';
 
-function ItemListContainer() {
+import CartContextWrapper from '../context/CartContext';
+
+const ItemListContainer = () => {
   const [items, setItems] = useState([]);
   const [foundTxt, setFoundTxt] = useState([]);
   const { categoryPath } = useParams();
@@ -49,7 +51,7 @@ function ItemListContainer() {
                 category_id,
               }) => {
                 return (
-                  <ItemContainer
+                  <ItemList
                     key={id}
                     id={id}
                     title={title}
@@ -69,5 +71,5 @@ function ItemListContainer() {
       )}
     </div>
   );
-}
+};
 export default ItemListContainer;

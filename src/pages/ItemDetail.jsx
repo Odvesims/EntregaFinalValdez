@@ -1,16 +1,25 @@
-import { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useState, useEffect, useContext } from 'react';
+import { useParams } from 'react-router-dom';
+
+import { CartContext } from '../context/CartContext';
 
 import { getItemById, getItemByIdAndCategory } from '../utils/mockItems';
 
 import '../assets/styles/ItemDetail.css';
 import { getCategoryByPath } from '../utils/mockCategories';
 import NotFound from './NotFound';
+import ItemQuantitySelector from '../components/ItemQuantitySelector';
+import AddItemButton from '../components/AddItemButton';
 
-function ItemDetail() {
+const ItemDetail = () => {
+  const { setItemInCart, getItemCount, itemCartExistence } =
+    useContext(CartContext);
+
   const { itemId, categoryPath } = useParams();
   const [item, setItem] = useState(undefined);
   const [foundTxt, setFoundTxt] = useState('');
+  const [itemCount, setItemCount] = useState(0);
+  const [itemInCart, setItemInCartExistence] = useState(false);
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -37,7 +46,17 @@ function ItemDetail() {
       }
     };
     fetchItem();
-  }, [itemId, categoryPath]);
+  }, [itemId]);
+
+  useEffect(() => {
+    const count = getItemCount(itemId);
+    setItemCount(count);
+  }, [getItemCount, itemId]);
+
+  useEffect(() => {
+    const existence = itemCartExistence({ id: itemId }).exists;
+    setItemInCartExistence(existence);
+  }, [itemCount, itemId, itemCartExistence, setItemInCart]);
 
   return (
     <div>
@@ -56,11 +75,32 @@ function ItemDetail() {
             <b>Price: </b>
             {item.price}
           </div>
+          <div className="row">
+            <div className="col-12">
+              <ItemQuantitySelector
+                itemCount={itemCount}
+                setItemCount={setItemCount}
+                itemCartExistence={itemInCart}
+              />
+            </div>
+          </div>
+          {!itemInCart && (
+            <div className="row">
+              <div className="col-12">
+                <AddItemButton
+                  setItemInCart={setItemInCart}
+                  itemCount={itemCount}
+                  itemId={item.id}
+                />
+              </div>
+            </div>
+          )}
+          <hr />
         </div>
       ) : (
         <NotFound text={foundTxt} />
       )}
     </div>
   );
-}
+};
 export default ItemDetail;
