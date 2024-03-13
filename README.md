@@ -49,6 +49,11 @@ La data se movió a dos archivos .js localizados en /src/utils. Estos consisten 
 Se añadieron varios archivos .css en /src/assets/styles para añadir styling a los componentes.
 
 
+
+## Se añadió una carpeta /extra/ en el directorio raiz para ubicar el .gif de la navegación requerida para la entrega.
+
+
+
 # Pasos para correr la app
 
 ### Clonar/descargar el repositorio
