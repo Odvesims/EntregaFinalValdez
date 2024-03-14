@@ -1,9 +1,8 @@
 //import { itemsList } from './mockItems';
 //import { itemCategories } from './mockCategories';
-import { CartContext } from '../context/CartContext';
 
 import { db } from '../config/firebase';
-import { collection, getDocs, getDoc, doc } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 
 const productsCollectionRef = collection(db, 'products');
 const categoriesCollectionRef = collection(db, 'categories');
@@ -13,6 +12,11 @@ const ordersCollectionRef = collection(db, 'orders');
 
 export const apiRequest = async (request, ...params) => {
   try {
+    let forceRemoteFetch = false;
+    if (params.includes('force_remote_fetch')) {
+      forceRemoteFetch = params.force_remote_fetch;
+    }
+    params.push(forceRemoteFetch);
     const result = await apiFunctions[request](...params);
     return { valid: true, message: '', data: result };
   } catch (error) {
@@ -20,114 +24,142 @@ export const apiRequest = async (request, ...params) => {
   }
 };
 
+const fetchFilteredData = async (
+  fetchingFunction,
+  filterParams,
+  storageKey,
+  remoteFetch
+) => {
+  if (remoteFetch || !localStorage.getItem(storageKey)) {
+    const data = await fetchingFunction();
+    localStorage.setItem(storageKey, JSON.stringify(data));
+    return filterParams(data);
+  } else {
+    return filterParams(JSON.parse(localStorage.getItem(storageKey)));
+  }
+};
+
 /// PRODUCTS ///
 
-const getProducts = async () => {
+const getAllProducts = async () => {
   const data = await getDocs(productsCollectionRef);
   const products = data.docs.map((doc) => ({
     ...doc.data(),
     id: doc.id,
   }));
-
+  localStorage.setItem('products', JSON.stringify(products));
   return products;
 };
 
-const getProductById = async (productId) => {
-  const productRef = doc(db, 'products', productId);
-  const productSnapshot = await getDoc(productRef);
-
-  if (productSnapshot.exists()) {
-    return productSnapshot.data();
+const getProducts = async (forceRemoteFetch) => {
+  let products = [];
+  if (forceRemoteFetch || !localStorage.getItem('products')) {
+    products = await getAllProducts();
   } else {
-    return null;
+    products = JSON.parse(localStorage.getItem('products'));
   }
-};
-
-const getProductsByCategory = async (categoryId) => {
-  const data = await getDocs(productsCollectionRef);
-  const products = data.docs
-    .map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }))
-    .filter((product) => product.category_id === categoryId);
-
   return products;
 };
 
-const getProductsByIdAndCategory = async (id, categoryId) => {
-  const data = await getDocs(productsCollectionRef);
-  const product = data.docs
-    .map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }))
-    .find((item) => item.id === id && item.category_id === categoryId);
+const getProductById = async (productId, forceRemoteFetch) => {
+  return fetchFilteredData(
+    getAllProducts,
+    (products) => products.find((item) => item.id === productId),
+    'products',
+    forceRemoteFetch
+  );
+};
 
-  return product;
+const getProductsByCategory = async (categoryId, forceRemoteFetch) => {
+  return fetchFilteredData(
+    getAllProducts,
+    (products) => products.filter((item) => item.category_id === categoryId),
+    'products',
+    forceRemoteFetch
+  );
+};
+
+const getProductsByIdAndCategory = async (id, categoryId, forceRemoteFetch) => {
+  return fetchFilteredData(
+    getAllProducts,
+    (products) =>
+      products.find(
+        (item) => item.id === id && item.category_id === categoryId
+      ),
+    'products',
+    forceRemoteFetch
+  );
 };
 
 /// CATEGORIES ///
 
-const getProductsCategories = async () => {
+const getAllCategories = async () => {
   const data = await getDocs(categoriesCollectionRef);
-
   const categories = data.docs.map((doc) => ({
     ...doc.data(),
     id: doc.id,
   }));
-
+  localStorage.setItem('product_categories', JSON.stringify(categories));
   return categories;
 };
 
-const getProductCategoryByPath = async (path) => {
-  const data = await getDocs(categoriesCollectionRef);
-  const category = data.docs
-    .map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }))
-    .find((item) => item.path === path);
-
-  return category;
+const getProductsCategories = async (forceRemoteFetch) => {
+  let categories = [];
+  if (forceRemoteFetch || !localStorage.getItem('product_categories')) {
+    categories = await getAllCategories();
+  } else {
+    categories = JSON.parse(localStorage.getItem('product_categories'));
+  }
+  return categories;
 };
 
-const getProductCategoryById = async (id) => {
-  const data = await getDocs(categoriesCollectionRef);
-  const category = data.docs
-    .map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }))
-    .find((item) => item.id === id);
+const getProductCategoryByPath = async (path, forceRemoteFetch) => {
+  return fetchFilteredData(
+    getAllCategories,
+    (categories) => categories.find((item) => item.path === path),
+    'product_categories',
+    forceRemoteFetch
+  );
+};
 
-  return category;
+const getProductCategoryById = async (id, forceRemoteFetch) => {
+  return fetchFilteredData(
+    getAllCategories,
+    (categories) => categories.find((item) => item.id === id),
+    'product_categories',
+    forceRemoteFetch
+  );
 };
 
 /// ORDERS ///
 
-const getOrders = async () => {
+const getAllOrders = async () => {
   const data = await getDocs(ordersCollectionRef);
-
   const orders = data.docs.map((doc) => ({
     ...doc.data(),
     id: doc.id,
   }));
-
+  localStorage.setItem('orders', JSON.stringify(orders));
   return orders;
 };
 
-const getOrderByNumber = async (number) => {
-  const data = await getDocs(ordersCollectionRef);
+const getOrders = async (forceRemoteFetch) => {
+  let orders = [];
+  if (forceRemoteFetch || !localStorage.getItem('orders')) {
+    orders = await getAllOrders();
+  } else {
+    orders = JSON.parse(localStorage.getItem('orders'));
+  }
+  return orders;
+};
 
-  const order = data.docs
-    .map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }))
-    .find((order) => order.number === number);
-
-  return order;
+const getOrderByNumber = async (number, forceRemoteFetch) => {
+  return fetchFilteredData(
+    getAllOrders,
+    (orders) => orders.find((item) => item.order_number === number),
+    'orders',
+    forceRemoteFetch
+  );
 };
 
 const apiFunctions = {
@@ -141,66 +173,3 @@ const apiFunctions = {
   getOrders,
   getOrderByNumber,
 };
-
-/*export const getItems = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(itemsList);
-    }, 500);
-  });
-};
-
-export const getItemById = (itemId) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(itemsList.find((item) => item.id === itemId));
-    }, 500);
-  });
-};
-
-export const getItemsByCategory = (categoryId) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(itemsList.filter((item) => item.category_id === categoryId));
-    }, 500);
-  });
-};
-
-export const getItemByIdAndCategory = (itemId, categoryId) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(
-        itemsList.find(
-          (item) => item.id === itemId && item.category_id === categoryId
-        )
-      );
-    }, 300);
-  });
-};
-
-
-export const getCategories = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(itemCategories);
-    }, 200);
-  });
-};
-
-export const getCategoryByPath = (path) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(itemCategories.find((item) => item.path === path));
-    }, 100);
-  });
-};
-
-export const getCategoryById = (id) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(itemCategories.find((item) => item.id === id));
-    }, 100);
-  });
-};
-
-*/
