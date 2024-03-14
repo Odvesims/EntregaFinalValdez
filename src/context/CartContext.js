@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from 'react';
 
 export const CartContext = createContext();
 
-function CartContextWrapper({ children }) {
+const CartContextProvider = ({ children }) => {
   const [cartItemsCount, setCartItemsCount] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
   const [cartItems, setCartItems] = useState([]);
@@ -31,7 +31,7 @@ function CartContextWrapper({ children }) {
 
   const itemCartExistence = (item) => {
     const existingItemIndex = cartItems.findIndex(
-      (cartItem) => cartItem.id === parseInt(item.id)
+      (cartItem) => cartItem.id === item.id
     );
     let exists = false;
     if (existingItemIndex !== -1) exists = true;
@@ -83,6 +83,6 @@ function CartContextWrapper({ children }) {
       {children}
     </CartContext.Provider>
   );
-}
+};
 
-export default CartContextWrapper;
+export default CartContextProvider;

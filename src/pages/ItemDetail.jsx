@@ -3,15 +3,17 @@ import { useParams } from 'react-router-dom';
 
 import { CartContext } from '../context/CartContext';
 
-import { getItemById, getItemByIdAndCategory } from '../utils/mockItems';
+import { apiRequest } from '../utils/api';
 
 import '../assets/styles/ItemDetail.css';
-import { getCategoryByPath } from '../utils/mockCategories';
 import NotFound from './NotFound';
 import ItemQuantitySelector from '../components/ItemQuantitySelector';
 import AddItemButton from '../components/AddItemButton';
 
+import { useErrorToast } from '../context/ErrorToastContext';
+
 const ItemDetail = () => {
+  const { showError } = useErrorToast();
   const { setItemInCart, getItemCount, itemCartExistence } =
     useContext(CartContext);
 
@@ -25,28 +27,38 @@ const ItemDetail = () => {
     const fetchItem = async () => {
       let item = {};
       if (categoryPath) {
-        const category = await getCategoryByPath(categoryPath);
-        if (!category) {
+        const category = await apiRequest(
+          'getProductCategoryByPath',
+          categoryPath
+        );
+        if (!category.data) {
+          showError(item.message);
           setFoundTxt('Not Found');
           return undefined;
         }
         setFoundTxt('');
-        item = await getItemByIdAndCategory(parseInt(itemId), category.id);
+        item = await apiRequest(
+          'getProductsByIdAndCategory',
+          itemId,
+          category.id
+        );
       } else {
-        item = await getItemById(parseInt(itemId));
-        if (!item) {
+        item = await apiRequest('getProductById', itemId);
+        if (!item.data) {
+          showError(item.message);
           setFoundTxt('Not Found');
           return undefined;
         }
       }
-      if (item) {
-        setItem(item);
+      if (item.data) {
+        setItem(item.data);
       } else {
+        showError(item.message);
         setFoundTxt('Not Found');
       }
     };
     fetchItem();
-  }, [itemId]);
+  }, [categoryPath, itemId]);
 
   useEffect(() => {
     const count = getItemCount(itemId);
@@ -62,8 +74,8 @@ const ItemDetail = () => {
     <div>
       {item ? (
         <div className="item-detail card">
-          <div className="card-img img-fluid rounded-start">
-            <img src={item.image} />
+          <div className="card-img">
+            <img className="img-detail" src={item.image} />
           </div>
           <div className="card-header">
             <h5 className="card-title">{item.title}</h5>

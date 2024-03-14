@@ -9,6 +9,11 @@
   height: 40%;
 }
 
+image {
+  width: 50%;
+  height: 80%;
+}
+
 .item-title {
   height: 30%;
   font-family: Verdana, Geneva, Tahoma, sans-serif;

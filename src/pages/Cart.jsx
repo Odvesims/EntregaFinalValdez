@@ -47,10 +47,17 @@ const Cart = () => {
                 </div>
               </h3>
             </strong>
-            <div className="ml-2 mt-2 mb-2">
-              <Link className="btn btn-success text-white" to={`/brief`}>
-                Checkout
-              </Link>
+            <div className="ml-2 mt-2 mb-2 row col-12">
+              <div className="col-6">
+                <Link className="btn btn-success text-white" to={`/checkout`}>
+                  Checkout
+                </Link>
+              </div>
+              <div className="col-6">
+                <Link className="btn btn-info text-white" to={`/past_orders`}>
+                  Past Orders
+                </Link>
+              </div>
             </div>
           </div>
         </div>

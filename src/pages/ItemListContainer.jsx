@@ -1,34 +1,41 @@
 import { useState, useEffect } from 'react';
-import { getItems, getItemsByCategory } from '../utils/mockItems';
 
 import { useParams } from 'react-router-dom';
 
 import ItemList from '../components/ItemList';
 
 import '../assets/styles/ItemListContainer.css';
-import { getCategoryByPath } from '../utils/mockCategories';
+import { apiRequest } from '../utils/api';
 import NotFound from './NotFound';
-
-import CartContextWrapper from '../context/CartContext';
+import { useErrorToast } from '../context/ErrorToastContext';
 
 const ItemListContainer = () => {
   const [items, setItems] = useState([]);
   const [foundTxt, setFoundTxt] = useState([]);
   const { categoryPath } = useParams();
+  const { showError } = useErrorToast();
 
   useEffect(() => {
     const fetchItems = async () => {
       if (categoryPath) {
-        const category = await getCategoryByPath(categoryPath);
-        if (!category) {
+        const category = await apiRequest(
+          'getProductCategoryByPath',
+          categoryPath
+        );
+        if (!category.data) {
           setFoundTxt('Not Found');
           return [];
         }
-        const filteredItems = await getItemsByCategory(category.id);
-        setItems(filteredItems);
+        const filteredItems = await apiRequest(
+          'getProductsByCategory',
+          category.data.id
+        );
+        filteredItems.valid
+          ? setItems(filteredItems.data)
+          : showError(filteredItems.message);
       } else {
-        const allItems = await getItems();
-        setItems(allItems);
+        const allItems = await apiRequest('getProducts');
+        allItems.valid ? setItems(allItems.data) : showError(allItems.message);
       }
     };
     fetchItems();
@@ -36,7 +43,7 @@ const ItemListContainer = () => {
 
   return (
     <div>
-      {items.length > 0 ? (
+      {items && items.length > 0 ? (
         <div>
           <h1>Items</h1>
           <div className="gallery">
@@ -47,7 +54,7 @@ const ItemListContainer = () => {
                 image,
                 description,
                 price,
-                rating,
+                stock,
                 category_id,
               }) => {
                 return (
@@ -57,7 +64,7 @@ const ItemListContainer = () => {
                     title={title}
                     image={image}
                     price={price}
-                    rate={rating.rate}
+                    stock={stock}
                     description={description}
                     category_id={category_id}
                   />

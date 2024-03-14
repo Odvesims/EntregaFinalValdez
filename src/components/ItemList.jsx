@@ -1,15 +1,14 @@
 import '../assets/styles/ItemContainer.css';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { getCategoryById } from '../utils/mockCategories';
-import ItemQuantitySelector from './ItemQuantitySelector';
+import { apiRequest } from '../utils/api';
 
-const ItemList = ({ id, title, image, price, rate, category_id }) => {
+const ItemList = ({ id, title, image, price, stock, category_id }) => {
   const [categoryName, setCategoryName] = useState('');
 
   useEffect(() => {
     const fetchCategoryName = async () => {
-      const category = await getCategoryById(category_id);
+      const category = await apiRequest('getProductCategoryById', category_id);
       if (category) setCategoryName(category.path);
     };
     fetchCategoryName();
@@ -17,7 +16,7 @@ const ItemList = ({ id, title, image, price, rate, category_id }) => {
 
   return (
     <div className="column is-4 item-container">
-      <div className="item-image">
+      <div className="item-image w-100">
         <img src={image} />
       </div>
       <div className="item-title">
@@ -29,7 +28,7 @@ const ItemList = ({ id, title, image, price, rate, category_id }) => {
           <b>Price:</b> {price}
         </div>
         <div className="col-6">
-          <b>Rate</b> {rate}
+          <b>Stock</b> {stock}
         </div>
       </div>
       <hr />
