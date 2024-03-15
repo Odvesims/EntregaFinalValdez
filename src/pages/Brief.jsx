@@ -22,7 +22,7 @@ const Brief = () => {
   }, []);
 
   return (
-    <div>{order && <OrderDetail order={order} showPersonal={false} />}</div>
+    <div>{order && <OrderDetail order={order} showPersonal={true} />}</div>
   );
 };
 export default Brief;

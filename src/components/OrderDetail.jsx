@@ -1,6 +1,6 @@
 import CartItem from './CartItem';
 
-const OrderDetail = ({ order, showPersonal = true }) => {
+const OrderDetail = ({ order, showPersonal }) => {
   return (
     <div>
       <div>

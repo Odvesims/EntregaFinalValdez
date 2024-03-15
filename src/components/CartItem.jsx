@@ -2,8 +2,8 @@ import RemoveItemButton from './RemoveItemButton';
 
 import '../assets/styles/CartItem.css';
 
-const CartItem = ({ item }) => {
-  const { id, name, price, count, total, image, remove } = item;
+const CartItem = ({ item, remove }) => {
+  const { id, name, price, count, total, image } = item;
   return (
     <div className="card col-12 mt-1">
       <div className="row g-12">

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import OrderDetail from '../components/OrderDetail';
 import { apiRequest } from '../utils/api';
-import Brief from './Brief';
 import { useLoading } from '../context/LoadingContext';
 
 const PastOrders = () => {
@@ -54,7 +53,7 @@ const PastOrders = () => {
           <i className="text-danger">{errorMessage}</i>
         </div>
       </div>
-      {order && <OrderDetail order={order} />}
+      {order && <OrderDetail order={order} showPersonal={false} />}
     </div>
   );
 };

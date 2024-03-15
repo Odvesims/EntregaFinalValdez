@@ -19,7 +19,7 @@ const ItemDetail = () => {
   const { setItemInCart, getItemCount, itemCartExistence } =
     useContext(CartContext);
 
-  const { itemId, itemUrlKey, categoryPath } = useParams();
+  const { itemUrlKey, categoryPath } = useParams();
 
   const [item, setItem] = useState(undefined);
   const [foundTxt, setFoundTxt] = useState('');
@@ -70,14 +70,14 @@ const ItemDetail = () => {
   }, [categoryPath, itemUrlKey]);
 
   useEffect(() => {
-    const count = getItemCount(itemId);
+    const count = getItemCount(itemUrlKey);
     setItemCount(count);
-  }, [getItemCount, itemId]);
+  }, [getItemCount, itemUrlKey]);
 
   useEffect(() => {
-    const existence = itemCartExistence({ id: itemId }).exists;
+    const existence = itemCartExistence({ url_key: itemUrlKey }).exists;
     setItemInCartExistence(existence);
-  }, [itemCount, itemId, itemCartExistence, setItemInCart]);
+  }, [itemCount, itemUrlKey, itemCartExistence, setItemInCart]);
 
   return (
     <div>
@@ -103,6 +103,7 @@ const ItemDetail = () => {
                   itemName={item.title}
                   itemImage={item.image}
                   itemPrice={item.price}
+                  itemUrlKey={item.url_key}
                 />
               </div>
             </div>

@@ -207,7 +207,6 @@ const getOrderById = async (id, forceRemoteFetch) => {
 };
 
 const getOrderByNumber = async (number, forceRemoteFetch) => {
-  console.log('number', number);
   return fetchFilteredData(
     getAllOrders,
     (orders) => orders.find((item) => item.order_number === parseInt(number)),

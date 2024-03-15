@@ -6,11 +6,13 @@ const AddItemButton = ({
   itemCount,
   itemImage,
   itemPrice,
+  itemUrlKey,
 }) => {
   const addItem = () => {
     setItemInCart(
       {
         id: itemId,
+        url_key: itemUrlKey,
         name: itemName,
         description: itemDescription,
         image: itemImage,

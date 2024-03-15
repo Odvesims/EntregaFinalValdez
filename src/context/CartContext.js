@@ -31,7 +31,7 @@ const CartContextProvider = ({ children }) => {
 
   const itemCartExistence = (item) => {
     const existingItemIndex = cartItems.findIndex(
-      (cartItem) => cartItem.id === item.id
+      (cartItem) => cartItem.url_key === item.url_key
     );
     let exists = false;
     if (existingItemIndex !== -1) exists = true;
@@ -66,8 +66,8 @@ const CartContextProvider = ({ children }) => {
     setCartItemsCount(0);
   };
 
-  const getItemCount = (itemId) => {
-    const item = cartItems.find((item) => item.id === itemId);
+  const getItemCount = (urlKey) => {
+    const item = cartItems.find((item) => item.url_key === urlKey);
     if (item) return item.count;
     return 0;
   };
