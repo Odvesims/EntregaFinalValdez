@@ -1,10 +1,10 @@
 .error-toast-container {
   position: relative;
-  min-height: 200px;
 }
 
 .error-toast {
-  position: absolute;
-  top: 0;
-  right: 0;
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  z-index: 9999;
 }

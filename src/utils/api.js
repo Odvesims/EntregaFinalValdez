@@ -2,7 +2,7 @@
 //import { itemCategories } from './mockCategories';
 
 import { db } from '../config/firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, addDoc } from 'firebase/firestore';
 
 const productsCollectionRef = collection(db, 'products');
 const categoriesCollectionRef = collection(db, 'categories');
@@ -32,10 +32,20 @@ const fetchFilteredData = async (
 ) => {
   if (remoteFetch || !localStorage.getItem(storageKey)) {
     const data = await fetchingFunction();
-    localStorage.setItem(storageKey, JSON.stringify(data));
     return filterParams(data);
   } else {
     return filterParams(JSON.parse(localStorage.getItem(storageKey)));
+  }
+};
+
+const clearLocalData = async () => {
+  try {
+    localStorage.clear();
+    await getAllCategories();
+    await getAllProducts();
+    return true;
+  } catch (err) {
+    throw err;
   }
 };
 
@@ -139,8 +149,17 @@ const getAllOrders = async () => {
     ...doc.data(),
     id: doc.id,
   }));
-  localStorage.setItem('orders', JSON.stringify(orders));
   return orders;
+};
+
+const submitOrder = async (newOrder) => {
+  try {
+    const newOrderRef = await addDoc(ordersCollectionRef, newOrder);
+    const newOrderId = newOrderRef.id;
+    return { order_id: newOrderId };
+  } catch (error) {
+    throw error;
+  }
 };
 
 const getOrders = async (forceRemoteFetch) => {
@@ -153,10 +172,20 @@ const getOrders = async (forceRemoteFetch) => {
   return orders;
 };
 
-const getOrderByNumber = async (number, forceRemoteFetch) => {
+const getOrderById = async (id, forceRemoteFetch) => {
   return fetchFilteredData(
     getAllOrders,
-    (orders) => orders.find((item) => item.order_number === number),
+    (orders) => orders.find((item) => item.id === id),
+    'orders',
+    forceRemoteFetch
+  );
+};
+
+const getOrderByNumber = async (number, forceRemoteFetch) => {
+  console.log('number', number);
+  return fetchFilteredData(
+    getAllOrders,
+    (orders) => orders.find((item) => item.order_number === parseInt(number)),
     'orders',
     forceRemoteFetch
   );
@@ -171,5 +200,8 @@ const apiFunctions = {
   getProductCategoryByPath,
   getProductCategoryById,
   getOrders,
+  getOrderById,
   getOrderByNumber,
+  submitOrder,
+  clearLocalData,
 };

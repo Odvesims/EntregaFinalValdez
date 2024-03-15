@@ -24,7 +24,10 @@ const RemoveItemButton = ({ itemId }) => {
 
   return (
     <div>
-      <button className="btn btn-danger" onClick={openConfirmation}>
+      <button
+        className="btn btn-danger cart-item-icon"
+        onClick={openConfirmation}
+      >
         <FaTrash />
       </button>
       {showConfirmModal && (

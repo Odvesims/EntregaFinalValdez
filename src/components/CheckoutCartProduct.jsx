@@ -1,4 +1,4 @@
-const BriefCartProduct = ({ name, count, total }) => {
+const CheckoutCartProduct = ({ name, count, total }) => {
   return (
     <li className="list-group-item d-flex justify-content-between lh-sm">
       <div>
@@ -10,4 +10,4 @@ const BriefCartProduct = ({ name, count, total }) => {
     </li>
   );
 };
-export default BriefCartProduct;
+export default CheckoutCartProduct;

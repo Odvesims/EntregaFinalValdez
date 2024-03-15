@@ -11,6 +11,7 @@ import ItemQuantitySelector from '../components/ItemQuantitySelector';
 import AddItemButton from '../components/AddItemButton';
 
 import { useErrorToast } from '../context/ErrorToastContext';
+import { useLoading } from '../context/LoadingContext';
 
 const ItemDetail = () => {
   const { showError } = useErrorToast();
@@ -23,15 +24,18 @@ const ItemDetail = () => {
   const [itemCount, setItemCount] = useState(0);
   const [itemInCart, setItemInCartExistence] = useState(false);
 
+  const { setLoading } = useLoading();
   useEffect(() => {
     const fetchItem = async () => {
       let item = {};
+      setLoading(true);
       if (categoryPath) {
         const category = await apiRequest(
           'getProductCategoryByPath',
           categoryPath
         );
         if (!category.data) {
+          setLoading(false);
           showError(item.message);
           setFoundTxt('Not Found');
           return undefined;
@@ -40,11 +44,12 @@ const ItemDetail = () => {
         item = await apiRequest(
           'getProductsByIdAndCategory',
           itemId,
-          category.id
+          category.data.id
         );
       } else {
         item = await apiRequest('getProductById', itemId);
         if (!item.data) {
+          setLoading(false);
           showError(item.message);
           setFoundTxt('Not Found');
           return undefined;
@@ -56,6 +61,7 @@ const ItemDetail = () => {
         showError(item.message);
         setFoundTxt('Not Found');
       }
+      setLoading(false);
     };
     fetchItem();
   }, [categoryPath, itemId]);

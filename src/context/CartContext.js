@@ -61,6 +61,11 @@ const CartContextProvider = ({ children }) => {
     setCartItems(updatedCart);
   };
 
+  const clearCart = () => {
+    setCartItems([]);
+    setCartItemsCount(0);
+  };
+
   const getItemCount = (itemId) => {
     const item = cartItems.find((item) => item.id === itemId);
     if (item) return item.count;
@@ -76,6 +81,7 @@ const CartContextProvider = ({ children }) => {
         cartItemsCount,
         cartTotal,
         setCartItemsCount,
+        clearCart,
         getItemCount,
         itemCartExistence,
       }}

@@ -13,19 +13,21 @@ import { useState, useEffect } from 'react';
 
 import { useErrorToast } from '../context/ErrorToastContext';
 import { apiRequest } from '../utils/api';
+import { useLoading } from '../context/LoadingContext';
 
 const NavBar = ({ appName }) => {
   const { showError } = useErrorToast();
-
   const [categories, setCategories] = useState([]);
+  const { setLoading } = useLoading();
 
   useEffect(() => {
     const fetchCategories = async () => {
+      setLoading(true);
       const itemsCategories = await apiRequest('getProductsCategories');
-      console.log('categories', itemsCategories);
       itemsCategories.valid
         ? setCategories(itemsCategories.data)
         : showError(itemsCategories.message);
+      setLoading(false);
     };
     fetchCategories();
   }, [showError]);

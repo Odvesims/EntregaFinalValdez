@@ -2,14 +2,18 @@ import '../assets/styles/ItemContainer.css';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { apiRequest } from '../utils/api';
+import { useLoading } from '../context/LoadingContext';
 
 const ItemList = ({ id, title, image, price, stock, category_id }) => {
+  const { setLoading } = useLoading();
   const [categoryName, setCategoryName] = useState('');
 
   useEffect(() => {
     const fetchCategoryName = async () => {
+      setLoading(true);
       const category = await apiRequest('getProductCategoryById', category_id);
-      if (category) setCategoryName(category.path);
+      if (category) setCategoryName(category.data.path);
+      setLoading(false);
     };
     fetchCategoryName();
   }, [category_id]);

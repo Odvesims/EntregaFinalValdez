@@ -8,21 +8,25 @@ import '../assets/styles/ItemListContainer.css';
 import { apiRequest } from '../utils/api';
 import NotFound from './NotFound';
 import { useErrorToast } from '../context/ErrorToastContext';
+import { useLoading } from '../context/LoadingContext';
 
 const ItemListContainer = () => {
   const [items, setItems] = useState([]);
   const [foundTxt, setFoundTxt] = useState([]);
   const { categoryPath } = useParams();
   const { showError } = useErrorToast();
+  const { setLoading } = useLoading();
 
   useEffect(() => {
     const fetchItems = async () => {
+      setLoading(true);
       if (categoryPath) {
         const category = await apiRequest(
           'getProductCategoryByPath',
           categoryPath
         );
         if (!category.data) {
+          setLoading(false);
           setFoundTxt('Not Found');
           return [];
         }
@@ -37,6 +41,7 @@ const ItemListContainer = () => {
         const allItems = await apiRequest('getProducts');
         allItems.valid ? setItems(allItems.data) : showError(allItems.message);
       }
+      setLoading(false);
     };
     fetchItems();
   }, [categoryPath]);

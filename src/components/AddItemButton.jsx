@@ -21,7 +21,7 @@ const AddItemButton = ({
   };
   return (
     <button className="btn btn-primary" onClick={addItem}>
-      Agregar
+      Add to cart
     </button>
   );
 };

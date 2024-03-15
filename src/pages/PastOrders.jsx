@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import OrderDetail from '../components/OrderDetail';
 import { apiRequest } from '../utils/api';
+import Brief from '../components/Brief';
+import { useLoading } from '../context/LoadingContext';
 
 const PastOrders = () => {
+  const { setLoading } = useLoading();
   const [orderNumber, setOrderNumber] = useState('');
-  const [order, setOrder] = useState({});
+  const [order, setOrder] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState('');
 
   const changeOrderNumber = (value) => {
@@ -15,12 +18,19 @@ const PastOrders = () => {
   };
   const searchOrder = async () => {
     setErrorMessage('');
+    setLoading(true);
     const pastOrder = await apiRequest('getOrderByNumber', orderNumber);
-    if (pastOrder && Object.keys(pastOrder).length === 0) {
-      setOrder(pastOrder);
+    if (pastOrder.valid && pastOrder.data !== undefined) {
+      setOrder(pastOrder.data);
     } else {
       setErrorMessage('No order found with that number');
     }
+    setLoading(false);
+  };
+
+  const changeOrderNumberHander = (value) => {
+    changeOrderNumber(value);
+    setOrder(undefined);
   };
 
   return (
@@ -32,7 +42,7 @@ const PastOrders = () => {
             className="form-control"
             placeholder="Enter your confirmation number"
             value={orderNumber}
-            onChange={(e) => changeOrderNumber(e.target.value)}
+            onChange={(e) => changeOrderNumberHander(e.target.value)}
           />
         </div>
         <div className="col-2">
@@ -44,7 +54,7 @@ const PastOrders = () => {
           <i className="text-danger">{errorMessage}</i>
         </div>
       </div>
-      <OrderDetail order={order} />
+      {order && <OrderDetail order={order} />}
     </div>
   );
 };
