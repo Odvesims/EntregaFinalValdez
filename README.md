@@ -54,7 +54,7 @@ Se añadieron varios archivos .css en /src/assets/styles para añadir styling a 
 
 # PreEntrega Final
 
-En la entrega final se agregaron los siguientes componentes:
+### En la entrega final se agregaron los siguientes componentes:
 
 #### AddItemButton : Agrega el artículo seleccionado con su respectiva cantidad al carrito de compra
 #### CartItem : Muestra el artículo en el carro con su cantidad, precio y total. Condicionalmente muestra un botón para quitarlo del carrito.
@@ -68,14 +68,14 @@ En la entrega final se agregaron los siguientes componentes:
 #### ReloadDataWidget : Un ícono que permite recargar la data desde al API
 #### RemoveItemButton : Botón para eliminar un artículo del carrito.
 
-###Se agregaron las siguientes pages:
+### Se agregaron las siguientes pages:
 
 #### Brief: Muestra los detalles de orden
 #### Cart : Muestra los detalles del carrito
 #### Checkout : Muestra el formulario para hacer checkout y registrar una orden
 #### PastOrders : Permite consultar órdenes ya registradas basado en el # de la orden.
 
-###Se agregaron 3 contextos:
+### Se agregaron 3 contextos:
 
 #### CartContext : Maneja el carrito. La cantidad de artículos, un arreglo con los artículos y el total de la orden.
 #### ErrorToastContext : Maneja el despliegue de errores en un modal.
@@ -87,9 +87,9 @@ La creación de estos contextos se hizo para garantizar que todos los componente
 
 Se integró firestore como base de datos. Se crearon 3 colecciones :
 
-####categories: Las diferentes categorías de artículos
-####products: Los artículos como tal
-####orders: Las órdenes que se registren desde la app
+#### categories: Las diferentes categorías de artículos
+#### products: Los artículos como tal
+#### orders: Las órdenes que se registren desde la app
 
 Se creó un archivo 'api' en la carpeta utils, en el cual se manejan todas las funciones que se comunican con el API. Se creó una interfaz única para acceder a estas funciones desde los componentes:
 
