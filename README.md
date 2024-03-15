@@ -14,13 +14,13 @@ Para la conexión con la db de firestore, opté por centralizar las operaciones 
 
 La app permite las siguientes funcionalidades:
 
-1- Cargar categorías/productos de manera asíncrona desde firestore
-2- Cargar productos al carrito de compra 
-3- Eliminar productos del carrito de compra
-4- Visualizar la cantidad de artículos en el carrito desde cualquier página via un widget en el navbar
-5- Hacer checkout de la orden (visualizando los artículos y el total)
-6- Guardar la orden en la db 
-7- Extraer detalles de la orden usando el No.Orden
+* 1- Cargar categorías/productos de manera asíncrona desde firestore
+* 2- Cargar productos al carrito de compra 
+* 3- Eliminar productos del carrito de compra
+* 4- Visualizar la cantidad de artículos en el carrito desde cualquier página via un widget en el navbar
+* 5- Hacer checkout de la orden (visualizando los artículos y el total)
+* 6- Guardar la orden en la db 
+* 7- Extraer detalles de la orden usando el No.Orden
 
 
 
