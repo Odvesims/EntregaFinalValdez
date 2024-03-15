@@ -21,6 +21,8 @@ const Brief = () => {
     fetchOrder();
   }, []);
 
-  return <div>{order && <OrderDetail order={order} />}</div>;
+  return (
+    <div>{order && <OrderDetail order={order} showPersonal={false} />}</div>
+  );
 };
 export default Brief;

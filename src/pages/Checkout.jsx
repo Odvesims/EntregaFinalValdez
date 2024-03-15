@@ -11,8 +11,10 @@ const Checkout = () => {
   const { cartItems, cartItemsCount, cartTotal, clearCart } =
     useContext(CartContext);
   const [orderName, setOrderName] = useState('');
-  const [orderAddress, setOrderAddress] = useState('');
+  const [orderLastName, setOrderLastName] = useState('');
+  const [orderPhone, setOrderPhone] = useState('');
   const [orderMail, setOrderMail] = useState('');
+  const [orderMailConfirmation, setOrderMailConfirmation] = useState('');
   const { showError } = useErrorToast();
   const navigate = useNavigate();
 
@@ -21,8 +23,12 @@ const Checkout = () => {
       showError('Name cannot be blank', 3000);
       return false;
     }
-    if (orderAddress === '') {
-      showError('Address cannot be blank', 3000);
+    if (orderLastName === '') {
+      showError('Lastname cannot be blank', 3000);
+      return false;
+    }
+    if (orderPhone === '') {
+      showError('Phone cannot be blank', 3000);
       return false;
     }
     if (orderMail === '') {
@@ -31,6 +37,14 @@ const Checkout = () => {
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(orderMail)) {
       showError('Email is not valid', 3000);
+      return false;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(orderMailConfirmation)) {
+      showError('Email confirmation is not valid', 3000);
+      return false;
+    }
+    if (orderMail !== orderMailConfirmation) {
+      showError('Email and Confirmation dont match', 3000);
       return false;
     }
     if (cartTotal === 0 || cartItemsCount === 0) {
@@ -43,7 +57,7 @@ const Checkout = () => {
   const getToday = () => {
     const today = new Date();
     const year = today.getFullYear();
-    const month = today.getMonth() + 1; // Month is zero-based, so add 1
+    const month = today.getMonth() + 1;
     const day = today.getDate();
     return `${year}-${month}-${day}`;
   };
@@ -58,8 +72,9 @@ const Checkout = () => {
       });
       const order = {
         client_name: orderName,
+        client_lastname: orderLastName,
+        client_phone: orderPhone,
         client_email: orderMail,
-        client_address: orderAddress,
         order_number: Math.floor(Math.random() * 900000) + 100000,
         order_total: cartTotal,
         products: sanitizedProducts,
@@ -123,10 +138,20 @@ const Checkout = () => {
                 value={orderName}
               />
             </div>
+            <div className="col-sm-6">
+              <label className="form-label">Lastname</label>
+              <input
+                type="text"
+                className="form-control"
+                id="lastName"
+                onChange={(e) => {
+                  setOrderLastName(e.target.value);
+                }}
+                value={orderLastName}
+              />
+            </div>
             <div className="col-12">
-              <label className="form-label">
-                Email <span className="text-body-secondary">(Optional)</span>
-              </label>
+              <label className="form-label">Email</label>
               <input
                 type="email"
                 className="form-control"
@@ -139,16 +164,29 @@ const Checkout = () => {
               />
             </div>
             <div className="col-12">
-              <label className="form-label">Address</label>
+              <label className="form-label">Confirmation</label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                placeholder="Confirm Email"
+                onChange={(e) => {
+                  setOrderMailConfirmation(e.target.value);
+                }}
+                value={orderMailConfirmation}
+              />
+            </div>
+            <div className="col-12">
+              <label className="form-label">Phone</label>
               <input
                 type="text"
                 className="form-control"
-                id="address"
-                placeholder="1234 Main St"
+                id="phone"
+                placeholder="(111) 111-1111"
                 onChange={(e) => {
-                  setOrderAddress(e.target.value);
+                  setOrderPhone(e.target.value);
                 }}
-                value={orderAddress}
+                value={orderPhone}
               />
             </div>
             <div className="text-center">

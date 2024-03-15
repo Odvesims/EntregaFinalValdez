@@ -1,27 +1,33 @@
 import CartItem from './CartItem';
 
-const OrderDetail = ({ order }) => {
+const OrderDetail = ({ order, showPersonal = true }) => {
   return (
     <div>
       <div>
         <h1>{`Order #${order.order_number} Brief`}</h1>
       </div>
-      <div className="row">
-        <div className="col-2">Date:</div>
-        <div className="col-10">{order.date}</div>
-      </div>
-      <div className="row">
-        <div className="col-2">Name:</div>
-        <div className="col-10">{order.client_name}</div>
-      </div>
-      <div className="row">
-        <div className="col-2">Email:</div>
-        <div className="col-10">{order.client_email}</div>
-      </div>
-      <div className="row">
-        <div className="col-2">Address:</div>
-        <div className="col-10">{order.client_address}</div>
-      </div>
+      {showPersonal && (
+        <div>
+          <div className="row">
+            <div className="col-2">Date:</div>
+            <div className="col-10">{order.date}</div>
+          </div>
+          <div className="row">
+            <div className="col-2">Name:</div>
+            <div className="col-10">
+              {order.client_name} {order.client_lastname}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-2">Email:</div>
+            <div className="col-10">{order.client_email}</div>
+          </div>
+          <div className="row">
+            <div className="col-2">Phone:</div>
+            <div className="col-10">{order.client_phone}</div>
+          </div>
+        </div>
+      )}
       <div className="row">
         <div className="col-2">
           <h3>Products</h3>
