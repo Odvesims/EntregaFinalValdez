@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { apiRequest } from '../utils/api';
 import { useErrorToast } from '../context/ErrorToastContext';
-import CartItem from './CartItem';
+import CartItem from '../components/CartItem';
 import { useParams } from 'react-router-dom';
-import OrderDetail from './OrderDetail';
+import OrderDetail from '../components/OrderDetail';
 
 const Brief = () => {
   const { showError } = useErrorToast();
@@ -14,7 +14,6 @@ const Brief = () => {
   useEffect(() => {
     const fetchOrder = async () => {
       const clientOrder = await apiRequest('getOrderById', orderId);
-      console.log('clientOrder', clientOrder);
       clientOrder.valid
         ? setOrder(clientOrder.data)
         : showError(clientOrder.message);

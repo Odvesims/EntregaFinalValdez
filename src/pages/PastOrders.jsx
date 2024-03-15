@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import OrderDetail from '../components/OrderDetail';
 import { apiRequest } from '../utils/api';
-import Brief from '../components/Brief';
+import Brief from './Brief';
 import { useLoading } from '../context/LoadingContext';
 
 const PastOrders = () => {

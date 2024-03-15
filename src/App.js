@@ -17,7 +17,7 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 
 import PastOrders from './pages/PastOrders';
-import Brief from './components/Brief';
+import Brief from './pages/Brief';
 
 const App = () => {
   return (
