@@ -4,9 +4,9 @@ sweetStore es una tienda online de artículos variados.
 
 Está desarrollada utilizando reactJs con integración de librearías como:
 
-*react-bootstrap
-*fa-icon
-*firebase/firestore
+#### react-bootstrap
+#### fa-icon
+* firebase/firestore
 
 Para el desarrollo de la aplicación set utilzaron los diversos conceptos que conocimos en la clase. Para el manejo de un 'global state' usamos Context. Esto me ayudó a poder manejar el carrito de compras, el loader y también un toast para mostrar los mensajes de errores de una manera centralizada y reutilizable por toda la app.
 
