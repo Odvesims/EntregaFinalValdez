@@ -12,6 +12,7 @@ import AddItemButton from '../components/AddItemButton';
 
 import { useErrorToast } from '../context/ErrorToastContext';
 import { useLoading } from '../context/LoadingContext';
+import Description from '../components/Description';
 
 const ItemDetail = () => {
   const { showError } = useErrorToast();
@@ -80,19 +81,7 @@ const ItemDetail = () => {
     <div>
       {item ? (
         <div className="item-detail card">
-          <div className="card-img">
-            <img className="img-detail" src={item.image} />
-          </div>
-          <div className="card-header">
-            <h5 className="card-title">{item.title}</h5>
-          </div>
-          <div className="card-body">
-            <p className="card-text">{item.description}</p>
-          </div>
-          <div className="card-footer">
-            <b>Price: </b>
-            {item.price}
-          </div>
+          <Description item={item} />
           <div className="row">
             <div className="col-12">
               <ItemQuantitySelector
