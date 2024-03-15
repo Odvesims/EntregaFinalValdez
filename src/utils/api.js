@@ -80,6 +80,15 @@ const getProductById = async (productId, forceRemoteFetch) => {
   );
 };
 
+const getProductByUrlKey = async (productUrlKey, forceRemoteFetch) => {
+  return fetchFilteredData(
+    getAllProducts,
+    (products) => products.find((item) => item.url_key === productUrlKey),
+    'products',
+    forceRemoteFetch
+  );
+};
+
 const getProductsByCategory = async (categoryId, forceRemoteFetch) => {
   return fetchFilteredData(
     getAllProducts,
@@ -95,6 +104,22 @@ const getProductsByIdAndCategory = async (id, categoryId, forceRemoteFetch) => {
     (products) =>
       products.find(
         (item) => item.id === id && item.category_id === categoryId
+      ),
+    'products',
+    forceRemoteFetch
+  );
+};
+
+const getProductsByUrlKeyAndCategory = async (
+  urlKey,
+  categoryId,
+  forceRemoteFetch
+) => {
+  return fetchFilteredData(
+    getAllProducts,
+    (products) =>
+      products.find(
+        (item) => item.url_key === urlKey && item.category_id === categoryId
       ),
     'products',
     forceRemoteFetch
@@ -199,6 +224,8 @@ const apiFunctions = {
   getProductsCategories,
   getProductCategoryByPath,
   getProductCategoryById,
+  getProductByUrlKey,
+  getProductsByUrlKeyAndCategory,
   getOrders,
   getOrderById,
   getOrderByNumber,

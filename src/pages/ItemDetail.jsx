@@ -19,13 +19,15 @@ const ItemDetail = () => {
   const { setItemInCart, getItemCount, itemCartExistence } =
     useContext(CartContext);
 
-  const { itemId, categoryPath } = useParams();
+  const { itemId, itemUrlKey, categoryPath } = useParams();
+
   const [item, setItem] = useState(undefined);
   const [foundTxt, setFoundTxt] = useState('');
   const [itemCount, setItemCount] = useState(0);
   const [itemInCart, setItemInCartExistence] = useState(false);
 
   const { setLoading } = useLoading();
+
   useEffect(() => {
     const fetchItem = async () => {
       let item = {};
@@ -38,21 +40,21 @@ const ItemDetail = () => {
         if (!category.data) {
           setLoading(false);
           showError(item.message);
-          setFoundTxt('Not Found');
+          setFoundTxt('Category not Found');
           return undefined;
         }
         setFoundTxt('');
         item = await apiRequest(
-          'getProductsByIdAndCategory',
-          itemId,
+          'getProductsByUrlKeyAndCategory',
+          itemUrlKey,
           category.data.id
         );
       } else {
-        item = await apiRequest('getProductById', itemId);
+        item = await apiRequest('getProductByUrlKey', itemUrlKey);
         if (!item.data) {
           setLoading(false);
           showError(item.message);
-          setFoundTxt('Not Found');
+          setFoundTxt('Product Not found');
           return undefined;
         }
       }
@@ -60,12 +62,12 @@ const ItemDetail = () => {
         setItem(item.data);
       } else {
         showError(item.message);
-        setFoundTxt('Not Found');
+        setFoundTxt('Product Not found');
       }
       setLoading(false);
     };
     fetchItem();
-  }, [categoryPath, itemId]);
+  }, [categoryPath, itemUrlKey]);
 
   useEffect(() => {
     const count = getItemCount(itemId);

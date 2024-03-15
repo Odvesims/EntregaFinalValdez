@@ -33,8 +33,11 @@ const App = () => {
                   path="/category/:categoryPath"
                   element={<ItemListContainer />}
                 />
-                <Route path="/item/:itemId" element={<ItemDetail />} />
-                <Route path="/:categoryPath/:itemId" element={<ItemDetail />} />
+                <Route path="/item/:itemUrlKey" element={<ItemDetail />} />
+                <Route
+                  path="/:categoryPath/:itemUrlKey"
+                  element={<ItemDetail />}
+                />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/past_orders" element={<PastOrders />} />

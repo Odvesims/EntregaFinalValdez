@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { apiRequest } from '../utils/api';
 import { useLoading } from '../context/LoadingContext';
 
-const ItemList = ({ id, title, image, price, stock, category_id }) => {
+const ItemList = ({ id, url_key, title, image, price, stock, category_id }) => {
   const { setLoading } = useLoading();
   const [categoryName, setCategoryName] = useState('');
 
@@ -38,7 +38,7 @@ const ItemList = ({ id, title, image, price, stock, category_id }) => {
       <hr />
       <div className="item-more row">
         <div className="col-12">
-          <Link className="btn btn-primary" to={`/${categoryName}/${id}`}>
+          <Link className="btn btn-primary" to={`/${categoryName}/${url_key}`}>
             More
           </Link>
         </div>

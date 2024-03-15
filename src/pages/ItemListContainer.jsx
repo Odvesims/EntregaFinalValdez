@@ -55,6 +55,7 @@ const ItemListContainer = () => {
             {items.map(
               ({
                 id,
+                url_key,
                 title,
                 image,
                 description,
@@ -66,6 +67,7 @@ const ItemListContainer = () => {
                   <ItemList
                     key={id}
                     id={id}
+                    url_key={url_key}
                     title={title}
                     image={image}
                     price={price}
