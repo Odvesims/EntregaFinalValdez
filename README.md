@@ -8,7 +8,7 @@ Está desarrollada utilizando reactJs con integración de librearías como:
 * fa-icon
 * firebase/firestore
 
-Para el desarrollo de la aplicación set utilzaron los diversos conceptos que conocimos en la clase. Para el manejo de un 'global state' usamos Context. Esto me ayudó a poder manejar el carrito de compras, el loader y también un toast para mostrar los mensajes de errores de una manera centralizada y reutilizable por toda la app.
+Para el desarrollo de la aplicación se emplearon los diversos conceptos que conocimos en la clase. Para el manejo de un 'global state' usamos Context. Esto me ayudó a poder manejar el carrito de compras, el loader y también un toast para mostrar los mensajes de errores de una manera centralizada y reutilizable por toda la app.
 
 Para la conexión con la db de firestore, opté por centralizar las operaciones en un archivo api.jsx y allí definí una interfaz (apiRequest) que recibe como parámetros la referencia textual al request que se quiere realizar, y luego el resto de argumentos que se pasen son usados como los parámetros para el request. Esto me permitió poder normalizar la respuesta del api haciendo que esta sea uniforme { valid: boolean, message: string, data: object }. De esta manera, pude reaccionar siempre de la misma manera a cualquier petición al API y reduje la posibilidad de introducir errores al tener respuestas variadas.
 
