@@ -28,4 +28,7 @@ La app permite las siguientes funcionalidades:
 
 ### Correr el comando `npm install` para instalar las dependencias necesarias
 
+### Crear un .env y agregar la siguiente línea para conectarse a la DB de firestore : REACT_APP_API_KEY='AIzaSyAD8qMjxXeBnABLcGOkaN1vyuKBTLCFzbU'
+
+
 ### Correr el comando `npm start` para arrancar la aplicación
