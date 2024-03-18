@@ -12,6 +12,10 @@ Para el desarrollo de la aplicación se emplearon los diversos conceptos que con
 
 Para la conexión con la db de firestore, opté por centralizar las operaciones en un archivo api.jsx y allí definí una interfaz (apiRequest) que recibe como parámetros la referencia textual al request que se quiere realizar, y luego el resto de argumentos que se pasen son usados como los parámetros para el request. Esto me permitió poder normalizar la respuesta del api haciendo que esta sea uniforme { valid: boolean, message: string, data: object }. De esta manera, pude reaccionar siempre de la misma manera a cualquier petición al API y reduje la posibilidad de introducir errores al tener respuestas variadas.
 
+Nota: 
+
+La data de productos/categorías se carga una primera vez desde firestore y se almacena de manera local usando local-storage. Esto es para evitar que se consuma el límite de peticiones diarias que impone firestore a las cuentas gratuitas. Se agregó un botón en el footer que permite forzar la carga remota de los productos/categorías.
+
 La app permite las siguientes funcionalidades:
 
 * 1- Cargar categorías/productos de manera asíncrona desde firestore
